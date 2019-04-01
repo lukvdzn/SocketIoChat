@@ -1,5 +1,5 @@
  // $(...) equivalent to document.ready
- $(function () {
+ $( _ => {
     //check if user is typing
     let userTyping = false;
     const dots = ["...", ".  ", " . ", "  ."];
@@ -7,12 +7,14 @@
     //timer for the ... animation whilst typing
     let timer;
 
-    const socket = io();
-    const textBox = $('#m');
-    const nameBox = $('#name');
-    const messageList = $('#messages');
-
-    $('form').submit(function(e){
+    const socket = io(); // client socket
+    const textBox = $('#m'); // user message input
+    const nameBox = $('#name'); // name of current user
+    const messageList = $('#messages'); // the unordered Message list
+   
+    
+    //when a user submits a message
+    $('form').submit( e => {
       e.preventDefault(); // prevents page reloading
       const text = textBox.val();
       const name = nameBox.val();
@@ -26,12 +28,13 @@
       socket.emit('user typing', `${nameBox.val()} is typing`);
     });
     
-    socket.on('chat message', function({name, text}){
+    //when the socket retrieves a chat message emitted from the webserver
+    socket.on('chat message', ({name, text}) => {
         if(userTyping)
         {
           messageList.children().last().remove();
           clearInterval(timer);
-        } 
+        }
         userTyping = false;
         //append the name and the message to the <ul>
         messageList.append($('<li>').text(`${name}: ${text}`));
@@ -39,8 +42,8 @@
         document.getElementById('messages').lastChild.scrollIntoView();
     });
 
+    //when the socket retrieves a dispatched 'user typing' message
     socket.on('user typing', msg => {
-      
       if(!userTyping)
       {
         userTyping = true;
