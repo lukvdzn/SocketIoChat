@@ -6,26 +6,32 @@
     let dotIndex = 0;
     //timer for the ... animation whilst typing
     let timer;
+    let username; // name of current client
 
     const socket = io(); // client socket
     const textBox = $('#m'); // user message input
-    const nameBox = $('#name'); // name of current user
     const messageList = $('#messages'); // the unordered Message list
-   
-    
+
+    $('#username-input').submit(e => {
+      e.preventDefault(); // prevend page reloading
+      username = $('#name').val();
+      $('#username-input').hide();
+      socket.emit('client user name', username);
+    });
+
     //when a user submits a message
-    $('form').submit( e => {
+    $('#text-input').submit( e => {
       e.preventDefault(); // prevents page reloading
       const text = textBox.val();
-      const name = nameBox.val();
-      socket.emit('chat message', {name : name, text : text});
+      socket.emit('chat message', {name : username, text : text});
       textBox.val('');
       return false;
     });
 
     //user is typing feature
     textBox[0].addEventListener('input', evt => {
-      socket.emit('user typing', `${nameBox.val()} is typing`);
+      if(!textBox[0].value == "")
+        socket.emit('user typing', `${username} is typing`);
     });
     
     //when the socket retrieves a chat message emitted from the webserver
@@ -53,6 +59,17 @@
         messageList.children().last().text(msg + dots[dotIndex++ % 4]);
         }, 500);
       }
+    });
+
+
+    //when a client has joined the chat
+    socket.on('user joined', msg => {
+      messageList.append($('<li>').text(msg).css('color', 'green'));
+    });
+
+    //when a client has left the chat
+    socket.on('user left', msg => {
+      messageList.append($('<li>').text(msg).css('color', 'red'));
     });
 });
   
