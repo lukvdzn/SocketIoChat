@@ -15,7 +15,7 @@
     $('#username-input').submit(e => {
       e.preventDefault(); // prevend page reloading
       username = $('#name').val();
-      $('#username-input').hide();
+      $('#name-container').hide();
       socket.emit('client user name', username);
     });
 
@@ -30,7 +30,6 @@
 
     //user is typing feature
     textBox[0].addEventListener('input', evt => {
-      if(!textBox[0].value == "")
         socket.emit('user typing', `${username} is typing`);
     });
     
@@ -61,7 +60,7 @@
       }
     });
 
-
+   
     //when a client has joined the chat
     socket.on('user joined', msg => {
       messageList.append($('<li>').text(msg).css('color', 'green'));
