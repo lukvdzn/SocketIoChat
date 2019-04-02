@@ -11,11 +11,28 @@
     const socket = io(); // client socket
     const textBox = $('#m'); // user message input
     const messageList = $('#messages'); // the unordered Message list
+    const usrContainer = $('#user-online-container');
+
+    //hide the users sidebar from the beginning
+    usrContainer.hide();
+
+    $('#show-users').click(_ => {
+      const list = $('#users');
+      socket.emit('show users');
+      socket.on('show users', users => {
+        users.forEach(element => {
+          list.append($('<li>').text(element.name));
+        });
+      usrContainer.show();
+      });
+        //append the name and the message to the <ul>
+        messageList.append($('<li>').text(`${name}: ${text}`));
+    });
 
     $('#username-input').submit(e => {
       e.preventDefault(); // prevend page reloading
       username = $('#name').val();
-      $('#name-container').hide();
+      $('#user-container').hide();
       socket.emit('client user name', username);
     });
 

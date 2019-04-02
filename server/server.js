@@ -22,13 +22,21 @@ io.on('connection', socket => {
 
     //one client disconnected
     socket.on('disconnect', function(){
-        const user = connectedUsers.find((value) => {
+        const userindex = connectedUsers.findIndex((value) => {
             return value.id == socket.id;
         });
-        const name = user != undefined ? user.name : "anon";
-        console.log(`${name} disconnected`);
-        if(name != "anon")
-            io.emit('user left', `${name} has left the chat!`);
+        
+        //user object
+        const user = connectedUsers[userindex];
+
+        //remove disconnected user
+        if(userindex >= 0){            
+            connectedUsers.splice(userindex, 1);
+            const name = user != undefined ? user.name : "anon";
+            console.log(`${name} disconnected`);
+            if(name != "anon")
+                io.emit('user left', `${name} has left the chat!`);
+        }
       });
     
     //one client sent a message
@@ -48,6 +56,10 @@ io.on('connection', socket => {
         console.log(connectedUsers);
 
         io.emit('user joined', `${name} has joined the chat!`);
+    });
+
+    socket.on('show users', _ => {
+        io.emit('show users', connectedUsers);
     });
 });
 

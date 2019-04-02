@@ -6,17 +6,25 @@
   </head>
 
   <body>
-    <ul id="messages"></ul>
+    <ul id = "messages" class="list"></ul>
 
-    <div id="name-container">      
+    <div id="user-container">      
       <form action="" id="username-input">
-        <label>Username</label>
-        <input id="name" value= "Anonymous">
+        <label class="box-1">Username:</label>
+        <input id="name" value= "Anonymous" class="input">
+        <button class="button-style">Join</button>
       </form>
+    </div>
+
+    <div id="user-online-container">
+      <ul id="users" class="list">
+      </ul>
     </div>
     
     <form action="" id="text-input">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="m" autocomplete="off" />
+      <button>Send</button>
+      <button class="button-style" id="show-users">Show Users</button>
     </form>
 
 
