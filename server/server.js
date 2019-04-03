@@ -59,7 +59,8 @@ io.on('connection', socket => {
     });
 
     socket.on('show users', _ => {
-        io.emit('show users', connectedUsers);
+        //send userlist to client which queried
+        io.to(socket.id).emit('show users', connectedUsers);
     });
 });
 

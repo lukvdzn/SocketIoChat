@@ -12,23 +12,25 @@
     const textBox = $('#m'); // user message input
     const messageList = $('#messages'); // the unordered Message list
     const usrContainer = $('#user-online-container');
+    const listUser = $('#user-list');
 
-    //hide the users sidebar from the beginning
-    usrContainer.hide();
+    $('#show-users').click(_ => socket.emit('show users'));
 
-    $('#show-users').click(_ => {
-      const list = $('#users');
-      socket.emit('show users');
-      socket.on('show users', users => {
-        users.forEach(element => {
-          list.append($('<li>').text(element.name));
-        });
-      usrContainer.show();
+    socket.on('show users', users => {
+      users.forEach(element => {
+        listUser.append($('<li>').text(element.name));
       });
-        //append the name and the message to the <ul>
-        messageList.append($('<li>').text(`${name}: ${text}`));
+      usrContainer.show();
     });
 
+
+    //close userlist
+    $('#close-user-container').click(_ => {
+      listUser.empty();
+      usrContainer.hide();
+    });
+
+    //username of this client
     $('#username-input').submit(e => {
       e.preventDefault(); // prevend page reloading
       username = $('#name').val();
@@ -40,9 +42,14 @@
     $('#text-input').submit( e => {
       e.preventDefault(); // prevents page reloading
       const text = textBox.val();
+      if(text == 'clear')
+      {
+        messageList.empty();
+        textBox.val('');
+        return;
+      }
       socket.emit('chat message', {name : username, text : text});
       textBox.val('');
-      return false;
     });
 
     //user is typing feature

@@ -17,16 +17,18 @@
     </div>
 
     <div id="user-online-container">
-      <ul id="users" class="list">
-      </ul>
+      <button id="close-user-container" class="button-style">&times;</button>
+      <ul id="user-list" class="list"></ul>
     </div>
+
+    <button class="button-style" id="show-users">Show Users</button>
     
     <form action="" id="text-input">
       <input id="m" autocomplete="off" />
       <button>Send</button>
-      <button class="button-style" id="show-users">Show Users</button>
     </form>
 
+    <div id="space"></div>
 
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src = "/socket.io/socket.io.js"></script>

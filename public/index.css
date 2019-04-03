@@ -31,19 +31,23 @@ body { font: 13px Helvetica, Arial; }
     padding: 5px;
 }
 
-#user-container .button-style{
-    margin-left: 10%;
+.button-style{
     padding: 5px;
     border-radius: 5px;
 }
 
-#user-container .button-style:hover{
+.button-style:hover{
     cursor: pointer;
+}
+
+#user-container .button-style{
+    margin-left: 10%;
 }
 
 #user-online-container{
     position: fixed;
-    right: 0;
+    display: none; /*HIDDEN BY DEFAULT*/
+    right: 50%;
     margin-right: 1%;
     top: 30%;
     padding: 5px;
@@ -51,6 +55,18 @@ body { font: 13px Helvetica, Arial; }
     border-radius: 5px;
     border-color: #eee;
     width: 10%;
+    z-index: 2;
+}
+
+#user-online-container #close-user-container{
+    float: right;
+    margin-bottom: 5%;
+}
+
+#show-users{
+    position: fixed;
+    right: 0;
+    bottom: 5%;
 }
 
 #text-input { 
@@ -91,3 +107,7 @@ form button :not(.button-style){
 
 
 .list li:nth-child(odd) { background: #eee; }
+
+#space{
+    margin-bottom: 5%;
+}
