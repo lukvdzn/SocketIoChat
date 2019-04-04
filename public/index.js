@@ -7,6 +7,7 @@
     //timer for the ... animation whilst typing
     let timer;
     let username; // name of current client
+    let mesubmitting = false; // If im sending the message
 
     const socket = io(); // client socket
     const textBox = $('#m'); // user message input
@@ -34,7 +35,10 @@
     $('#username-input').submit(e => {
       e.preventDefault(); // prevend page reloading
       username = $('#name').val();
+     
       $('#user-container').hide();
+      $('#text-input').show(); //show the chat message form
+      
       socket.emit('client user name', username);
     });
 
@@ -42,12 +46,16 @@
     $('#text-input').submit( e => {
       e.preventDefault(); // prevents page reloading
       const text = textBox.val();
+      
       if(text == 'clear')
       {
         messageList.empty();
         textBox.val('');
+        mesubmitting = true;
+        socket.emit('user not submitting');
         return;
       }
+
       socket.emit('chat message', {name : username, text : text});
       textBox.val('');
     });
@@ -90,9 +98,19 @@
       messageList.append($('<li>').text(msg).css('color', 'green'));
     });
 
+
     //when a client has left the chat
     socket.on('user left', msg => {
       messageList.append($('<li>').text(msg).css('color', 'red'));
+    });
+    
+    socket.on('user not submitting', _ => {
+      if(!mesubmitting && userTyping) 
+      {
+        clearInterval(timer);
+        messageList.children().last().remove();
+      }
+      mesubmitting = false;
     });
 });
   

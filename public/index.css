@@ -9,17 +9,21 @@ body { font: 13px Helvetica, Arial; }
 
 #user-container{
     border: 2px solid #eee;
-    width: 40%;
+    width: 20%;
     margin: auto;
     border-radius: 5px;
     margin: 100px auto;
+    z-index: 2;
 }
-
 
 .box-1{
     display: inline-block;
     margin: 10px;
     text-align: center;
+}
+
+#name{
+    width: 50%;
 }
 
 
@@ -34,15 +38,13 @@ body { font: 13px Helvetica, Arial; }
 .button-style{
     padding: 5px;
     border-radius: 5px;
+    margin-left: 5px;
 }
 
 .button-style:hover{
     cursor: pointer;
 }
 
-#user-container .button-style{
-    margin-left: 10%;
-}
 
 #user-online-container{
     position: fixed;
@@ -63,36 +65,36 @@ body { font: 13px Helvetica, Arial; }
     margin-bottom: 5%;
 }
 
+/*
 #show-users{
     position: fixed;
-    right: 0;
-    bottom: 5%;
+    right: 11%;
+    bottom: 2.1%;
 }
+*/
 
 #text-input { 
-    background: #000; 
-    padding: 3px; 
+    display: none; /*HIDDEN FROM THE START*/
     position: fixed; 
-    bottom: 0; 
-    width: 100%; 
+    bottom: 1%; 
+    width: 100%;
 }
-
 
 #m{
-    border: 0; 
-    padding: 10px; 
+    border: 2px solid #eee; 
+    padding: 5px; 
     width: 80%; 
     margin-right: .5%; 
+    margin-left: .5%;
 }
 
-form button :not(.button-style){ 
+/*form button :not(.button-style){ 
     width: 9%; 
     background: rgb(130, 224, 255); 
     border: none; 
     padding: 10px; 
     float: right; 
-}
-
+}*/
 
 .list { 
     list-style-type: none; 

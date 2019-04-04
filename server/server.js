@@ -62,6 +62,12 @@ io.on('connection', socket => {
         //send userlist to client which queried
         io.to(socket.id).emit('show users', connectedUsers);
     });
+
+    socket.on('user not submitting', _ => {
+        console.log("USER NOT SUBITTING");
+        io.emit('user not submitting');
+    });
+
 });
 
 //listen on port PORT
